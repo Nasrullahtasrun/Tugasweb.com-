@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222222;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .calculator {
+            background-color: #333333;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .display {
+            background-color: #222222;
+            color: #fff;
+            font-size: 40px;
+            text-align: right;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            min-width: 300px;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .buttons button {
+            background-color: #555555;
+            color: white;
+            font-size: 20px;
+            padding: 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .buttons button:hover {
+            background-color: #777777;
+        }
+
+        .buttons button:active {
+            background-color: #444444;
+        }
+
+        .operator {
+            background-color: #FF9F00;
+        }
+
+        .equal {
+            background-color: #4CAF50;
+            grid-column: span 2;
+        }
+
+        .clear {
+            background-color: #D32F2F;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+    <div class="display" id="display">0</div>
+    <div class="buttons">
+        <button class="clear" onclick="clearDisplay()">AC</button>
+        <button onclick="appendToDisplay('/')">/</button>
+        <button onclick="appendToDisplay('*')">*</button>
+        <button class="operator" onclick="appendToDisplay('+')">+</button>
+        <button onclick="appendToDisplay('7')">7</button>
+        <button onclick="appendToDisplay('8')">8</button>
+        <button onclick="appendToDisplay('9')">9</button>
+        <button class="operator" onclick="appendToDisplay('-')">-</button>
+        <button onclick="appendToDisplay('4')">4</button>
+        <button onclick="appendToDisplay('5')">5</button>
+        <button onclick="appendToDisplay('6')">6</button>
+        <button class="operator" onclick="appendToDisplay('0')">0</button>
+        <button onclick="appendToDisplay('1')">1</button>
+        <button onclick="appendToDisplay('2')">2</button>
+        <button onclick="appendToDisplay('3')">3</button>
+        <button class="equal" onclick="calculateResult()">=</button>
+    </div>
+</div>
+
+<script>
+    let display = document.getElementById("display");
+
+    function appendToDisplay(value) {
+        if (display.innerText === "0") {
+            display.innerText = value;
+        } else {
+            display.innerText += value;
+        }
+    }
+
+    function clearDisplay() {
+        display.innerText = "0";
+    }
+
+    function calculateResult() {
+        let expression = display.innerText;
+
+        // Aturan khusus untuk penjumlahan yang melibatkan angka 5000
+        if (expression.includes("+") && (expression.includes("5000") || expression.includes("+5000"))) {
+            expression = expression.replace(/5000/g, "5000+5000");
+        }
+
+        try {
+            display.innerText = eval(expression);
+        } catch (error) {
+            display.innerText = "Error";
+        }
+    }
+</script>
+
+</body>
+</html>
